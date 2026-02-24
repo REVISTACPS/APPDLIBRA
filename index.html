@@ -118,6 +118,81 @@
             transition: all 0.3s ease;
         }
         .neuro-button:hover { background: #e52e71; color: white; transform: scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
+
+    /* ===== SECCIÓN REVISTA DESTACADA ===== */
+.revista-section {
+    margin: 40px 0;
+    padding: 30px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #001f3f, #004aad);
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: 0.3s ease;
+}
+
+.revista-section:hover {
+    transform: translateY(-5px);
+}
+
+.revista-img {
+    flex: 1;
+}
+
+.revista-img img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.revista-content {
+    flex: 1;
+}
+
+.revista-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.revista-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.revista-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #39ff14;
+    color: #000;
+    font-weight: bold;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,255,20,0.4);
+}
+
+.revista-button:hover {
+    background: #9b00ff;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .revista-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .revista-img img {
+        max-width: 220px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -293,6 +368,31 @@
                 🚀 Ver mi nivel
             </a>
         </div>
+
+        <!-- ===== SECCIÓN REVISTA DESTACADA ===== -->
+<div class="revista-section">
+
+    <div class="revista-img">
+        <img src="https://i.ibb.co/nN9tn9FR/SPEAK-LOCAL-MARZO-2025.png"
+             alt="Portada Revista Speak Local Marzo 2025"
+             loading="lazy">
+    </div>
+
+    <div class="revista-content">
+        <h2>📰 SPEAK LOCAL Magazine</h2>
+        <p>
+            No te pierdas nuestra revista mensual de inmersión en inglés.
+            Descubre cultura, nuevas expresiones y artículos exclusivos
+            diseñados para mantener tu inglés activo.
+        </p>
+
+        <a href="https://revistacps.github.io/Edicion-Especial-Ed.-001/"
+           class="revista-button">
+           📖 Ir a la Revista
+        </a>
+    </div>
+
+</div>
 
         <!-- AVISO -->
         <div class="notice">
