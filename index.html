@@ -1,337 +1,218 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema Premium+</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Premium+</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- ICONOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<style>
+    <!-- CSS UNIFICADO -->
+    <style>
+        /* ===== RESET ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+        a { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent; }
 
-/* ===== RESET ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
+        /* BODY Y MODO OSCURO */
+        body { background: #f4f4f4; color: #222; transition: 0.3s; }
+        .dark { background: #121212; color: white; }
 
-a {
-    text-decoration: none;
-    color: inherit;
-    -webkit-tap-highlight-color: transparent;
-}
+        /* TOP BAR */
+        .top-bar {
+            position: fixed; top: 0; width: 100%; height: 60px;
+            background: #ff5f00; display: flex; justify-content: flex-end; align-items: center;
+            padding: 0 20px; color: white; z-index: 1000;
+        }
+        .top-bar button { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
 
-/* BODY Y MODO OSCURO */
-body {
-    background: #f4f4f4;
-    color: #222;
-    transition: 0.3s;
-}
+        /* TAGS */
+        .tags-container {
+            position: fixed; top: 60px; width: 100%; background: white;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+            padding: 10px; border-bottom: 1px solid #ddd; z-index: 999;
+        }
+        .tag {
+            display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 20px;
+            font-size: 13px; background: #eaeaea; transition: all 0.25s ease;
+            position: relative; overflow: hidden; cursor: pointer;
+        }
+        .tag:hover { background: #6a00ff; color: white; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(106,0,255,0.4); }
+        .tag:active { transform: scale(0.95); }
+        .dark .tags-container { background: #1e1e1e; border-bottom: 1px solid #333; }
+        .dark .tag { background: #333; color: white; }
 
-.dark {
-    background: #121212;
-    color: white;
-}
+        /* MAIN CONTENT */
+        .main-content { margin-top: 130px; padding: 20px; padding-bottom: 100px; }
 
-/* TOP BAR */
-.top-bar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px;
-    background: #ff5f00;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 20px;
-    color: white;
-    z-index: 1000;
-}
+        /* TIMER */
+        .timer-box { background: purple; color: white; text-align: center; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+        .timer { font-size: 20px; font-weight: bold; }
 
-.top-bar button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
+        /* CLASSES */
+        .class-box {
+            display: block; background: white; padding: 15px; border-radius: 12px; margin-bottom: 20px;
+            text-align: center; transition: all 0.25s ease; cursor: pointer;
+        }
+        .class-box:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,123,255,0.25); }
+        .class-box:active { transform: scale(0.95); }
+        .dark .class-box { background: #1e1e1e; color: white; }
 
-/* TAGS */
-.tags-container {
-    position: fixed;
-    top: 60px;
-    width: 100%;
-    background: white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    z-index: 999;
-}
+        /* NOTICE */
+        .notice { background: #ffcc00; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: bold; color: #222; }
 
-.tag {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    background: #eaeaea;
-    transition: all 0.25s ease;
-    cursor: pointer;
-}
+        /* FOOTER */
+        .footer { text-align: center; padding: 20px; font-size: 14px; }
 
-.tag:hover {
-    background: #6a00ff;
-    color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(106, 0, 255, 0.4);
-}
+        /* BOTTOM NAV */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; height: 60px;
+            background: white; display: flex; justify-content: space-around; align-items: center;
+            border-top: 1px solid #ddd; z-index: 1000;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; transition: all 0.25s ease; padding: 6px 10px; border-radius: 12px; cursor: pointer; }
+        .nav-item i { font-size: 18px; margin-bottom: 3px; color: #ff9900; transition: all 0.25s ease; }
+        .nav-item span { color: #007bff; }
+        .nav-item:hover { transform: translateY(-4px); background: rgba(0,123,255,0.1); }
+        .nav-item:hover i { transform: scale(1.2); }
+        .nav-item:active { transform: scale(0.92); }
+        .dark .bottom-nav { background: #1a1a1a; border-top: 1px solid #333; }
+        .dark .nav-item i, .dark .nav-item span { color: white; }
 
-.dark .tags-container {
-    background: #1e1e1e;
-    border-bottom: 1px solid #333;
-}
+        /* BOTÓN LESSON */
+        .lesson-button {
+            display: block; width: 80%; max-width: 500px; margin: 10px auto 0 auto; padding: 12px 25px;
+            background: #39ff14; color: #000; font-weight: bold; font-size: 16px; text-align: center; border-radius: 12px;
+            text-decoration: none; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,255,20,0.4); cursor: pointer;
+        }
+        .lesson-button:hover { background: #9b00ff; color: white; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(155,0,255,0.6); }
+        .lesson-button:active { background: #6a00cc; transform: scale(0.95); box-shadow: 0 4px 10px rgba(155,0,255,0.5); }
 
-.dark .tag {
-    background: #333;
-    color: white;
-}
+        /* ===== SECCIÓN MELODIAS ===== */
+        .melodias-section { margin-top: 40px; padding: 20px 0; }
+        .melodias-title { text-align: center; font-size: 22px; margin-bottom: 20px; font-weight: bold; }
+        .carousel-container { overflow-x: auto; scroll-behavior: smooth; padding-bottom: 10px; }
+        .carousel-track { display: flex; gap: 20px; padding: 0 20px; }
+        .melodia-card {
+            min-width: 300px; background: white; border-radius: 12px; padding: 15px; flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s;
+        }
+        .melodia-card:hover { transform: translateY(-5px); }
+        .dark .melodia-card { background: #1e1e1e; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .melodia-button { display: block; margin: 12px auto 0 auto; padding: 10px; text-align: center; background: #39ff14; color: #000; font-weight: bold; border-radius: 10px; text-decoration: none; transition: 0.3s; }
+        .melodia-button:hover { background: #9b00ff; color: white; transform: scale(1.05); }
 
-/* MAIN CONTENT */
-.main-content {
-    margin-top: 130px;
-    padding: 20px;
-    padding-bottom: 100px;
-}
-
-/* TIMER */
-.timer-box {
-    background: purple;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-.timer {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-/* CLASSES */
-.class-box {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    text-align: center;
-    transition: all 0.25s ease;
-}
-
-.class-box:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.25);
-}
-
-.dark .class-box {
-    background: #1e1e1e;
-    color: white;
-}
-
-/* BOTÓN LESSON */
-.lesson-button {
-    display: block;
-    width: 80%;
-    max-width: 500px;
-    margin: 10px auto 0 auto;
-    padding: 12px 25px;
-    background: #39ff14;
-    color: #000;
-    font-weight: bold;
-    font-size: 16px;
-    text-align: center;
-    border-radius: 12px;
-    transition: 0.3s;
-    box-shadow: 0 5px 15px rgba(0, 255, 20, 0.4);
-}
-
-.lesson-button:hover {
-    background: #9b00ff;
-    color: white;
-}
-
-/* MELODIAS */
-.melodias-section { margin-top: 40px; }
-.carousel-container { overflow-x: auto; }
-.carousel-track { display: flex; gap: 20px; padding: 0 20px; }
-.melodia-card {
-    min-width: 300px;
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-}
-.dark .melodia-card { background: #1e1e1e; }
-
-.video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-}
-.video-wrapper iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.melodia-button {
-    display: block;
-    margin-top: 12px;
-    padding: 10px;
-    text-align: center;
-    background: #39ff14;
-    color: #000;
-    font-weight: bold;
-    border-radius: 10px;
-}
-
-/* CARD SECRETA */
-#neurolearningCard {
-    background: linear-gradient(135deg, #ff8a00, #e52e71);
-    color: white;
-    text-align: center;
-    padding: 18px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-}
-
-.neuro-button {
-    background: #fff;
-    color: #e52e71;
-    padding: 12px 25px;
-    border-radius: 12px;
-    display: inline-block;
-    font-weight: bold;
-}
-
-/* NOTICE */
-.notice {
-    background: #ffcc00;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-/* FOOTER */
-.footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
-}
-
-/* BOTTOM NAV */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    background: white;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-top: 1px solid #ddd;
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 10px;
-}
-
-.nav-item i {
-    font-size: 18px;
-    color: #007bff;
-}
-
-.dark .bottom-nav {
-    background: #1a1a1a;
-}
-
-.dark .nav-item i,
-.dark .nav-item span {
-    color: white;
-}
-
-</style>
+        /* NEUROLEARNING CARD */
+        #neurolearningCard {
+            background: linear-gradient(135deg, #ff8a00, #e52e71); color: white; text-align: center;
+            padding: 18px; border-radius: 14px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        #neurolearningCard h2 { font-size: 20px; margin-bottom: 8px; }
+        #neurolearningCard p { font-size: 16px; margin-bottom: 15px; }
+        .neuro-button {
+            background: #fff; color: #e52e71; padding: 12px 25px; font-size: 16px; border-radius: 12px;
+            display: inline-block; text-decoration: none; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        .neuro-button:hover { background: #e52e71; color: white; transform: scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
+    </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="top-bar">
-    <button onclick="toggleDarkMode()">
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <button onclick="toggleDarkMode()">
         <i class="fas fa-moon"></i>
     </button>
-</div>
-
-<!-- TAGS -->
-<div class="tags-container">
-    <a href="https://tinyurl.com/2ezt5kr7" class="tag">
-        <i class="fas fa-laptop"></i> Clases Online
-    </a>
-    <a href="https://tusitio.com/avisos" class="tag">
-        <i class="fas fa-bell"></i> Avisos
-    </a>
-    <a href="https://tusitio.com/juegos" class="tag">
-        <i class="fas fa-gamepad"></i> Juegos
-    </a>
-</div>
-
-<!-- MAIN CONTENT -->
-<div class="main-content">
-
-    <!-- TIMER -->
-    <div class="timer-box" id="timer-container">
-        <h2>Sorpresa</h2>
-        <p>Sistema Premium+ por tiempo limitado</p>
-        <div class="timer" id="countdown">00:00:00</div>
     </div>
 
-    <!-- CLASE 1 / VIDEO -->
-    <div class="class-box">
-        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
-            <iframe src="https://www.youtube.com/embed/vi8C6Gpa1Ho?autoplay=1&mute=1&controls=0&loop=1&playlist=vi8C6Gpa1Ho"
+    <!-- TAGS -->
+    <div class="tags-container">
+        <a href="https://revistacps.github.io/motordistribucionvideos1/" class="tag">
+            <i class="fas fa-laptop"></i> Clases Online
+        </a>
+        <a href="https://tusitio.com/avisos" class="tag">
+            <i class="fas fa-bell"></i> Avisos
+        </a>
+        <a href="https://revistacps.github.io/motordistribucionjuegos1/" class="tag">
+            <i class="fas fa-gamepad"></i> Juegos
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- TIMER -->
+        <div class="timer-box" id="timer-container">
+            <h2>Sorpresa</h2>
+            <p>Sistema Premium+ por tiempo limitado</p>
+            <div class="timer" id="countdown">00:00:00</div>
+        </div>
+
+        <!-- CLASE 1 / VIDEO -->
+        <div class="class-box">
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+                <iframe
+                    src="https://www.youtube.com/embed/vi8C6Gpa1Ho?autoplay=1&mute=1&controls=0&loop=1&playlist=vi8C6Gpa1Ho"
                     style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                     allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+                </iframe>
+            </div>
+            <h3 style="text-align:center; margin-top:10px;">Clase 1</h3>
+            <a href="https://revistacps.github.io/Video-megan-1/" class="lesson-button">
+                Aprende una frase diaria con Megan
+            </a>
         </div>
-        <h3 style="text-align:center; margin-top:10px;">Clase 1</h3>
-        <a href="https://revistacps.github.io/Video-megan-1/" class="lesson-button">
-            Aprende una frase diaria con Megan
-        </a>
-    </div> 
 
-    <!-- CLASE 2 / VIDEO -->
-    <div class="class-box">
-        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
-            <iframe src="https://www.youtube.com/embed/GisjPwsvnAk?autoplay=1&mute=1&controls=0&loop=1&playlist=GisjPwsvnAk"
+        <!-- CLASE 2 / VIDEO -->
+        <div class="class-box">
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+                <iframe
+                    src="https://www.youtube.com/embed/GisjPwsvnAk?autoplay=1&mute=1&controls=0&loop=1&playlist=GisjPwsvnAk"
                     style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                     allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+                </iframe>
+            </div>
+            <h3 style="text-align:center; margin-top:10px;">Clase 2</h3>
+            <a href="https://revistacps.github.io/Video-Jack-Sparrow-1/" class="lesson-button">
+                Aprende una frase diaria con Jack Sparrow...
+            </a>
         </div>
-        <h3 style="text-align:center; margin-top:10px;">Clase 2</h3>
-        <a href="https://revistacps.github.io/Video-Jack-Sparrow-1/" class="lesson-button">
-            Aprende una frase diaria con Jack Sparrow...
-        </a>
-    </div> 
 
-    <!-- ===== MELODIAS / CARRUSEL ===== -->
+        <!-- CLASE 3 / VIDEO -->
+        <div class="class-box">
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+                <iframe
+                    src="https://www.youtube.com/embed/GisjPwsvnAk?autoplay=1&mute=1&controls=0&loop=1&playlist=Nyw02xZFEH0"
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                    allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
+            </div>
+            <h3 style="text-align:center; margin-top:10px;">Clase 3</h3>
+            <a href="https://revistacps.github.io/Kunfupanda1/" class="lesson-button">
+                Aprende una frase diaria con Kung Fu Panda...
+            </a>
+        </div>
+
+        <!-- CLASE 4 / VIDEO -->
+        <div class="class-box">
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+                <iframe
+                    src="https://www.youtube.com/embed/GisjPwsvnAk?autoplay=1&mute=1&controls=0&loop=1&playlist=44w4FREZSwg"
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                    allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
+            </div>
+            <h3 style="text-align:center; margin-top:10px;">Clase 4</h3>
+            <a href="https://revistacps.github.io/Eradehielo1/" class="lesson-button">
+                Aprende una frase diaria con La Era De Hielo...
+            </a>
+        </div>
+
+        <!-- ===== MELODIAS / CARRUSEL ===== -->
         <div class="melodias-section">
 
             <h2 class="melodias-title">MELODÍAS</h2>
@@ -342,8 +223,7 @@ body {
                     <!-- ITEM 1 -->
                     <div class="melodia-card">
                         <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/LDkRy6ISqrA"
-                                allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/LDkRy6ISqrA" allowfullscreen></iframe>
                         </div>
                         <a href="https://revistacps.github.io/Melodia-Titanium/" class="melodia-button">
                             Ver Melodía
@@ -353,8 +233,7 @@ body {
                     <!-- ITEM 2 -->
                     <div class="melodia-card">
                         <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/kJQP7kiw5Fk"
-                                allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/kJQP7kiw5Fk" allowfullscreen></iframe>
                         </div>
                         <a href="https://revistacps.github.io/Melodia-Titanium/" class="melodia-button">
                             Escuchar Ahora
@@ -364,8 +243,7 @@ body {
                     <!-- ITEM 3 -->
                     <div class="melodia-card">
                         <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/OPf0YbXqDm0"
-                                allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/OPf0YbXqDm0" allowfullscreen></iframe>
                         </div>
                         <a href="https://revistacps.github.io/Melodia-Titanium/" class="melodia-button">
                             Ir a la Letra
@@ -377,59 +255,92 @@ body {
 
         </div>
 
+                <!-- CLASE 5 / VIDEO -->
+        <div class="class-box">
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+                <iframe
+                    src="https://www.youtube.com/embed/GisjPwsvnAk?autoplay=1&mute=1&controls=0&loop=1&playlist=EATFzQIzHVQ"
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                    allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
+            </div>
+            <h3 style="text-align:center; margin-top:10px;">Clase 5</h3>
+            <a href="https://revistacps.github.io/Acat1/" class="lesson-button">
+                Aprende una frase diaria con A Cat...
+            </a>
+        </div>
+
+        <!-- CLASE 6 / VIDEO -->
+        <div class="class-box">
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+                <iframe
+                    src="https://www.youtube.com/embed/GisjPwsvnAk?autoplay=1&mute=1&controls=0&loop=1&playlist=qF_KQliAjx0"
+                    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                    allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
+            </div>
+            <h3 style="text-align:center; margin-top:10px;">Clase 6</h3>
+            <a href= class="lesson-button">
+                Si quieres mas videos como este, dirigete al area de "VIDEO"...
+            </a>
+        </div>
+
         <!-- NUEVO CONTENEDOR EMOCIONANTE -->
-<div class="card" id="neurolearningCard">
-    <h2>🏆 Desbloquea tu Nivel Secreto</h2>
-    <p>¡Tu progreso puede llevarte a grandes logros! 🎯</p>
-    <a href="https://revistacps.github.io/Motor1/" 
-       class="neuro-button">
-        🚀 Ver mi nivel
-    </a>
-</div>        
+        <div class="card" id="neurolearningCard">
+            <h2>🏆 Desbloquea tu Nivel Secreto</h2>
+            <p>¡Tu progreso puede llevarte a grandes logros! 🎯</p>
+            <a href="https://revistacps.github.io/Motor1/" class="neuro-button">
+                🚀 Ver mi nivel
+            </a>
+        </div>
 
-    <!-- AVISO -->
-    <div class="notice">
-        Aviso importante: Revisa constantemente las nuevas actualizaciones del sistema.
+        <!-- AVISO -->
+        <div class="notice">
+            Aviso importante: Revisa constantemente las nuevas actualizaciones del sistema.
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            © 2026 Neurolerning School
+        </div>
+
     </div>
 
-    <!-- FOOTER -->
-    <div class="footer">
-        © 2026 Neurolerning School
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+        <a href="https://revistacps.github.io/MotorVideosPremium/" class="nav-item">
+            <i class="fas fa-video"></i><span>Video</span>
+        </a>
+        <a href="https://tusitio.com/path" class="nav-item">
+            <i class="fas fa-route"></i><span>Path</span>
+        </a>
+        <a href="https://tusitio.com/quiz" class="nav-item">
+            <i class="fas fa-question-circle"></i><span>Quiz</span>
+        </a>
+        <a href="https://tusitio.com/class" class="nav-item">
+            <i class="fas fa-chalkboard-teacher"></i><span>Class</span>
+        </a>
+        <a href="https://tusitio.com/repaso" class="nav-item">
+            <i class="fas fa-book"></i><span>Repaso</span>
+        </a>
+        <a href="https://tusitio.com/avisos" class="nav-item">
+            <i class="fas fa-bell"></i><span>Avisos</span>
+        </a>
     </div>
 
-</div>
+    <!-- JS externo -->
+    <script src="script.js"></script>
+</body>
 
-<!-- BOTTOM NAV -->
-<div class="bottom-nav">
-    <a href="https://tinyurl.com/2ezt5kr7" class="nav-item">
-        <i class="fas fa-video"></i><span>Video</span>
-    </a>
-    <a href="https://tusitio.com/path" class="nav-item">
-        <i class="fas fa-route"></i><span>Path</span>
-    </a>
-    <a href="https://tusitio.com/quiz" class="nav-item">
-        <i class="fas fa-question-circle"></i><span>Quiz</span>
-    </a>
-    <a href="https://tusitio.com/class" class="nav-item">
-        <i class="fas fa-chalkboard-teacher"></i><span>Class</span>
-    </a>
-    <a href="https://tusitio.com/repaso" class="nav-item">
-        <i class="fas fa-book"></i><span>Repaso</span>
-    </a>
-    <a href="https://tusitio.com/avisos" class="nav-item">
-        <i class="fas fa-bell"></i><span>Avisos</span>
-    </a>
-</div>
-
-<script>
-
-/* DARK MODE */
+    <!-- JS UNIFICADO -->
+    <script>
+        /* DARK MODE */
 function toggleDarkMode() {
     document.body.classList.toggle("dark");
 }
 
 /* COUNTDOWN PERSISTENTE */
-const DURACION = 24 * 60 * 60 * 1000;
+const DURACION = 24 * 60 * 60 * 1000; // 24 horas en ms
 let countDownDate = localStorage.getItem("countDownDate");
 
 if (!countDownDate) {
@@ -459,8 +370,6 @@ let intervalo = setInterval(function () {
 
     countdownElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s";
 }, 1000);
-
-</script>
-
+    </script>
 </body>
 </html>
